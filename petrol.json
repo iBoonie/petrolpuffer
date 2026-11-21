@@ -1,0 +1,120 @@
+{
+    "type": "srcds",
+    "display": "Team Fortress 2 - Petrol",
+    "data": {
+        "ip": {
+            "type": "string",
+            "value": "0.0.0.0",
+            "display": "IP",
+            "desc": "What IP to bind the server to",
+            "required": true,
+            "userEdit": false
+        },
+        "mapname": {
+            "type": "string",
+            "value": "ctf_2fort",
+            "display": "Team Fortess 2 Map to load",
+            "desc": "TF2 Map",
+            "required": true,
+            "userEdit": true
+        },
+        "maxplayers": {
+            "type": "integer",
+            "value": 32,
+            "display": "Max Players",
+            "desc": "Max amount of players that can be in the server",
+            "required": true,
+            "userEdit": false
+        },
+        "port": {
+            "type": "integer",
+            "value": 27015,
+            "display": "Port",
+            "desc": "What port to bind the server to",
+            "required": true,
+            "userEdit": false
+        },
+        "sv_setsteamaccount": {
+            "type": "string",
+            "value": "",
+            "display": "Steam Game Server Login Token",
+            "desc": "Generate one at https://steamcommunity.com/dev/managegameservers",
+            "required": false,
+            "userEdit": false
+        },
+        "tv_port": {
+            "type": "integer",
+            "value": 27025,
+            "display": "SourceTV Port",
+            "desc": "The port used for SourceTV",
+            "required": false,
+            "userEdit": false
+        }
+    },
+    "install": [
+        {
+            "if": "env == 'host'",
+            "type": "steamgamedl",
+            "appId": "232250"
+        },
+        {
+            "if": "env == 'docker'",
+            "type": "command",
+            "commands": [
+                "steamcmd +force_install_dir /pufferpanel +login anonymous +app_update 232250 +quit"
+            ]
+        },
+        {
+            "type": "command",
+            "commands": [
+                "chmod +x srcds_run"
+            ]
+        }
+    ],
+    "uninstall": null,
+    "run": {
+        "command": [
+            {
+                "command": "./srcds_run +ip ${ip} +port ${port} -game tf -console +map ${mapname} -autoupdate -steam_dir .steam/steamcmd -steamcmd_script /pufferpanel/.steam/steamcmd/autoupdate.txt -norestart",
+                "if": ""
+            }
+        ],
+        "stop": "exit",
+        "stdin": {
+            "type": "stdin"
+        },
+        "autostart": false,
+        "autorecover": false,
+        "autorestart": false
+    },
+    "environment": {
+        "type": "host"
+    },
+    "supportedEnvironments": [
+        {
+            "type": "host"
+        },
+        {
+            "type": "docker",
+            "image": "pufferpanel/steamcmd",
+            "portBindings": [
+                "0.0.0.0:${port}:${port}/tcp"
+            ]
+        }
+    ],
+    "requirements": {
+        "os": "linux",
+        "arch": "amd64"
+    },
+    "stats": {
+        "type": ""
+    },
+    "query": {
+        "type": ""
+    },
+    "keepAlive": {
+        "frequency": "",
+        "command": ""
+    },
+    "name": "Petrol"
+}
