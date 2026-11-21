@@ -1,6 +1,6 @@
 {
     "type": "srcds",
-    "display": "Team Fortress 2 - Petrol",
+    "display": "Team Fortress 2 - Petrollll",
     "data": {
         "ip": {
             "type": "string",
@@ -80,12 +80,20 @@
             }
         ],
         "stop": "exit",
+        "pre": [
+            {
+                "type": "writefile",
+                "target": ".steam/steamcmd/autoupdate.txt",
+                "text": "force_install_dir /pufferpanel\nlogin anonymous\napp_update 232250\nquit"
+            }
+        ],
         "stdin": {
             "type": "stdin"
         },
         "autostart": false,
         "autorecover": false,
-        "autorestart": false
+        "autorestart": false,
+        "post": []
     },
     "environment": {
         "type": "host"
