@@ -71,6 +71,7 @@
             ]
         }
     ],
+    "uninstall": null,
     "run": {
         "command": "./srcds_run -game tf -strictportbind +ip ${ip} +port ${port} +tv_port ${tv_port} +maxplayers ${maxplayers} +sv_setsteamaccount ${sv_setsteamaccount} -console +map ${mapname} -autoupdate -steam_dir .steam/steamcmd -steamcmd_script /pufferpanel/.steam/steamcmd/autoupdate.txt -norestart",
         "stop": "exit",
@@ -107,6 +108,16 @@
     "requirements": {
         "os": "linux",
         "arch": "amd64"
+    },
+    "stats": {
+        "type": ""
+    },
+    "query": {
+        "type": ""
+    },
+    "keepAlive": {
+        "frequency": "",
+        "command": ""
     },
     "name": "Petrol"
 }
