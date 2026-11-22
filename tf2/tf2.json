@@ -69,6 +69,12 @@
             "commands": [
                 "chmod +x srcds_run"
             ]
+        },
+        {
+            "type": "command",
+            "commands": [
+                "chmod +x srcds_run_64"
+            ]
         }
     ],
     "run": {
