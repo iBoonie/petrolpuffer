@@ -73,7 +73,13 @@
     ],
     "uninstall": null,
     "run": {
-        "command": "./srcds_run -game tf -strictportbind +ip ${ip} +port ${port} +tv_port ${tv_port} +maxplayers ${maxplayers} +sv_setsteamaccount ${sv_setsteamaccount} -console +map ${mapname} -autoupdate -steam_dir .steam/steamcmd -steamcmd_script /pufferpanel/.steam/steamcmd/autoupdate.txt -norestart",
+        "run": {
+            "command": [
+            {
+                "command": "./srcds_run -game tf -strictportbind +ip ${ip} +port ${port} +tv_port ${tv_port} +maxplayers ${maxplayers} +sv_setsteamaccount ${sv_setsteamaccount} -console +map ${mapname} -autoupdate -steam_dir .steam/steamcmd -steamcmd_script /pufferpanel/.steam/steamcmd/autoupdate.txt -norestart",
+                "if": ""
+            }
+        ],
         "stop": "exit",
         "pre": [
             {
