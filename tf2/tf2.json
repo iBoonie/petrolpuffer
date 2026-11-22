@@ -12,7 +12,7 @@
         },
         "mapname": {
             "type": "string",
-            "value": "ctf_2fort",
+            "value": "pl_badwater",
             "display": "Team Fortess 2 Map to load",
             "desc": "TF2 Map",
             "required": true,
