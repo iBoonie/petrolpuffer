@@ -75,7 +75,7 @@
     "run": {
         "command": [
             {
-                "command": "./srcds_run +ip ${ip} +port ${port} -game tf -console +map ${mapname} -autoupdate -steam_dir .steam/steamcmd -steamcmd_script /pufferpanel/.steam/steamcmd/autoupdate.txt -norestart",
+                "command": "./srcds_run -game tf -ip ${ip} -port ${port} -tv_port ${tv_port} +maxplayers ${maxplayers} +sv_setsteamaccount ${sv_setsteamaccount} -console +map ${mapname} -autoupdate -steam_dir .steam/steamcmd -steamcmd_script /pufferpanel/.steam/steamcmd/autoupdate.txt -norestart",
                 "if": ""
             }
         ],
@@ -106,7 +106,8 @@
             "type": "docker",
             "image": "pufferpanel/steamcmd",
             "portBindings": [
-                "0.0.0.0:${port}:${port}/tcp"
+                "0.0.0.0:${port}:${port}/udp",
+                "0.0.0.0:${tv_port}:${tv_port}/udp"
             ]
         }
     ],
