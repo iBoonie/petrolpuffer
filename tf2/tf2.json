@@ -68,7 +68,7 @@
     ],
     "run": {
         "command": "./srcds_run -game tf -console -strictportbind -autoupdate -steam_dir /pufferpanel/.local/share/Steam/steamcmd -steamcmd_script /pufferpanel/.steam/autoupdate.txt +ip ${ip} +port ${port} +tv_port ${tv_port} +maxplayers ${maxplayers} +map ${mapname} -norestart",
-        "stop": "exit",
+        "stop": "killserver;exit",
         "pre": [
             {
                 "type": "writefile",
@@ -79,8 +79,8 @@
         "stdin": {
             "type": "stdin"
         },
-        "autostart": false,
-        "autorecover": false,
+        "autostart": true,
+        "autorecover": true,
         "autorestart": false
     },
     "environment": {
@@ -88,8 +88,13 @@
         "image": "steamcmd-tf2:latest",
         "portBindings": [
             "0.0.0.0:${port}:${port}/udp",
+            "0.0.0.0:${port}:${port}/tcp",
             "0.0.0.0:${tv_port}:${tv_port}/udp"
-        ]
+        ],
+        "bindings": {
+            "/srv/tf-shared": "/pufferpanel/tf/custom/shared",
+            "/srv/demos": "/pufferpanel/tf/demos"
+        }
     },
     "supportedEnvironments": [
         {
@@ -97,8 +102,13 @@
             "image": "steamcmd-tf2:latest",
             "portBindings": [
                 "0.0.0.0:${port}:${port}/udp",
+                "0.0.0.0:${port}:${port}/tcp",
                 "0.0.0.0:${tv_port}:${tv_port}/udp"
-            ]
+            ],
+            "bindings": {
+                "/srv/tf-shared": "/pufferpanel/tf/custom/shared",
+                "/srv/demos": "/pufferpanel/tf/demos"
+            }
         }
     ],
     "requirements": {
