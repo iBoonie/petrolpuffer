@@ -41,50 +41,39 @@
             "desc": "What port to bind the SourceTV server to",
             "required": false,
             "userEdit": false
-        },
-        "sv_setsteamaccount": {
-            "type": "string",
-            "value": "",
-            "display": "GSLT",
-            "desc": "Generate one at https://steamcommunity.com/dev/managegameservers",
-            "required": false,
-            "userEdit": true
         }
     },
     "install": [
         {
-            "if": "env == 'host'",
-            "type": "steamgamedl",
-            "appId": "232250"
-        },
-        {
-            "if": "env == 'docker'",
             "type": "command",
             "commands": [
-                "steamcmd +force_install_dir /pufferpanel +login anonymous +app_update 232250 +quit"
+                "steamcmd +login anonymous +quit",
+                "steamcmd +force_install_dir /pufferpanel +login anonymous +app_update 232250 validate +quit"
             ]
         },
         {
             "type": "command",
             "commands": [
-                "chmod +x srcds_run"
+                "chmod +x srcds_run srcds_run_64"
             ]
         },
         {
             "type": "command",
             "commands": [
-                "chmod +x srcds_run_64"
+                "mkdir -p /pufferpanel/.steam",
+                "ln -sfn /pufferpanel/.local/share/Steam/steamcmd/linux32 /pufferpanel/.steam/sdk32",
+                "ln -sfn /pufferpanel/.local/share/Steam/steamcmd/linux64 /pufferpanel/.steam/sdk64"
             ]
         }
     ],
     "run": {
-        "command": "./srcds_run -game tf -strictportbind +ip ${ip} +port ${port} +tv_port ${tv_port} +maxplayers ${maxplayers} +sv_setsteamaccount ${sv_setsteamaccount} -console +map ${mapname} -autoupdate -steam_dir .steam/steamcmd -steamcmd_script /pufferpanel/.steam/steamcmd/autoupdate.txt -norestart",
+        "command": "./srcds_run -game tf -console -strictportbind -norestart -autoupdate -steam_dir /pufferpanel/.local/share/Steam/steamcmd -steamcmd_script /pufferpanel/.steam/autoupdate.txt +ip ${ip} +port ${port} +tv_port ${tv_port} +maxplayers ${maxplayers} +map ${mapname}",
         "stop": "exit",
         "pre": [
             {
                 "type": "writefile",
-                "target": ".steam/steamcmd/autoupdate.txt",
-                "text": "force_install_dir /pufferpanel\nlogin anonymous\napp_update 232250\nquit"
+                "target": ".steam/autoupdate.txt",
+                "text": "@ShutdownOnFailedCommand 1\n@NoPromptForPassword 1\nforce_install_dir /pufferpanel\nlogin anonymous\napp_update 232250\nquit\n"
             }
         ],
         "stdin": {
@@ -95,15 +84,17 @@
         "autorestart": false
     },
     "environment": {
-        "type": "host"
+        "type": "docker",
+        "image": "steamcmd-tf2:latest",
+        "portBindings": [
+            "0.0.0.0:${port}:${port}/udp",
+            "0.0.0.0:${tv_port}:${tv_port}/udp"
+        ]
     },
     "supportedEnvironments": [
         {
-            "type": "host"
-        },
-        {
             "type": "docker",
-            "image": "steamcmd/steamcmd",
+            "image": "steamcmd-tf2:latest",
             "portBindings": [
                 "0.0.0.0:${port}:${port}/udp",
                 "0.0.0.0:${tv_port}:${tv_port}/udp"
