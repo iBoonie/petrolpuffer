@@ -67,7 +67,7 @@
         }
     ],
     "run": {
-        "command": "./srcds_run -game tf -console -strictportbind -norestart -autoupdate -steam_dir /pufferpanel/.local/share/Steam/steamcmd -steamcmd_script /pufferpanel/.steam/autoupdate.txt +ip ${ip} +port ${port} +tv_port ${tv_port} +maxplayers ${maxplayers} +map ${mapname}",
+        "command": "./srcds_run -game tf -console -strictportbind -autoupdate -steam_dir /pufferpanel/.local/share/Steam/steamcmd -steamcmd_script /pufferpanel/.steam/autoupdate.txt +ip ${ip} +port ${port} +tv_port ${tv_port} +maxplayers ${maxplayers} +map ${mapname} -norestart",
         "stop": "exit",
         "pre": [
             {
