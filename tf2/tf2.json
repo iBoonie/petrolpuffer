@@ -92,6 +92,7 @@
             "0.0.0.0:${tv_port}:${tv_port}/udp"
         ],
         "bindings": {
+            "/etc/localtime": "/etc/localtime:ro",
             "/srv/tf-shared": "/pufferpanel/tf/custom/shared",
             "/srv/demos": "/pufferpanel/tf/demos"
         }
